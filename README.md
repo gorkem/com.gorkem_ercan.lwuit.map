@@ -22,12 +22,12 @@ Known Issues
 
 BUGS?
 -----
-File them at [https://github.com/gorkem/com.gorkem_ercan.lwuit.map/issues](GitHub)
+File them at [https://github.com/gorkem/com.gorkem_ercan.lwuit.map/issues](https://github.com/gorkem/com.gorkem_ercan.lwuit.map/issues)
 
 
 
 Further Reading
 ---
 
-- [https://projects.developer.nokia.com/LWUIT_for_Series_40](LWUIT for Series 40)
-- [http://www.developer.nokia.com/Develop/Maps/Maps_API_for_Java_ME/](Maps API for JavaME)
+- [https://projects.developer.nokia.com/LWUIT_for_Series_40](https://projects.developer.nokia.com/LWUIT_for_Series_40)
+- [http://www.developer.nokia.com/Develop/Maps/Maps_API_for_Java_ME/](http://www.developer.nokia.com/Develop/Maps/Maps_API_for_Java_ME/)
