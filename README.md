@@ -31,3 +31,11 @@ Further Reading
 
 - [https://projects.developer.nokia.com/LWUIT_for_Series_40](https://projects.developer.nokia.com/LWUIT_for_Series_40)
 - [http://www.developer.nokia.com/Develop/Maps/Maps_API_for_Java_ME/](http://www.developer.nokia.com/Develop/Maps/Maps_API_for_Java_ME/)
+
+
+License
+---
+This program and the accompanying materials are made available under the terms of the the Apache License, Version 2.0 
+(the "License"); you may not use this file except in compliance with the License.  
+
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
