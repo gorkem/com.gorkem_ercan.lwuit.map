@@ -26,7 +26,14 @@ import javax.microedition.lcdui.Graphics;
 import com.nokia.maps.map.EventListener;
 import com.nokia.maps.map.Point;
 
-public class InteractionControl extends MapComponentBase implements EventListener {
+/**
+ * Internal control for moving, panning etc on the map.
+ * Supports both key and touch events
+ * 
+ * @author Gorkem Ercan
+ *
+ */
+class InteractionControl extends MapComponentBase implements EventListener {
 	
 	private Point pointDown = new Point(0,0);
 	private boolean dragging;

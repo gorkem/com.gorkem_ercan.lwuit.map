@@ -29,6 +29,12 @@ import com.nokia.maps.map.MapObject;
 import com.nokia.maps.map.Point;
 import com.sun.lwuit.Display;
 
+/**
+ * Internal control for selection events on map items.
+ * 
+ * @author Gorkem Ercan
+ *
+ */
 class MapModelSelectionComponent extends MapComponentBase implements EventListener {
 	
 	private static final int CURSOR_SIZE = 6;

@@ -25,8 +25,13 @@ import javax.microedition.lcdui.Graphics;
 import com.nokia.maps.map.EventListener;
 import com.nokia.maps.map.MapComponent;
 import com.nokia.maps.map.MapDisplay;
-
-public class MapComponentBase implements MapComponent{
+/**
+ * A base class for the internal {@link MapComponent}s
+ * 
+ * @author Gorkem Ercan
+ *
+ */
+class MapComponentBase implements MapComponent{
 	
 	protected static final String VERSION = "0.1";
 	private String id;

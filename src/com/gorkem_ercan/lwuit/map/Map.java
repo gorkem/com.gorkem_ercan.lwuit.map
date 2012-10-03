@@ -33,7 +33,19 @@ import com.sun.lwuit.Graphics;
 import com.sun.lwuit.events.DataChangedListener;
 import com.sun.lwuit.geom.Dimension;
 
-
+/**
+ * A LWUIT Component for displaying Maps provided on the 
+ * <a href="http://developer.nokia.com/Maps"> Nokia Maps API.</a> 
+ * This component allows maps to be displayed on any place where a {@link Component} can be used.
+ * <p>
+ * Map component manages the creation of the underlying Nokia Maps API components so that they 
+ * are done at appropriate times on the Component lifecycle. Since this API is not intended to
+ * provide a full wrapper for the Nokia Maps API for JavaME, applications need to use the API 
+ * for Maps functionality.
+ * 
+ * @author Gorkem Ercan
+ *
+ */
 public class Map extends Component implements MapListener,DataChangedListener {
 	
 	private MapDisplay map;
@@ -48,8 +60,13 @@ public class Map extends Component implements MapListener,DataChangedListener {
 		setTactileTouch(false);
 	}
 	
+	/**
+	 * Returns the {@link MapFactory} instance used for
+	 * creating map objects.
+	 * 
+	 * @return factory
+	 */
 	public MapFactory getMapFactory(){
-	
 		if(mapFactory == null ){
 			mapFactory = MapFactory.createMapFactory(
 					MapDisplay.MAP_RESOLUTION_AUTO,
@@ -59,6 +76,11 @@ public class Map extends Component implements MapListener,DataChangedListener {
 		return mapFactory;
 	}
 	
+	/**
+	 * Returns the {@link MapDisplay} instance created.
+	 * 
+	 * @return MapDisplay
+	 */
 	public MapDisplay getMapDisplay(){
 		if(map==null){
 			map = getMapFactory().createMapDisplay();
@@ -68,6 +90,11 @@ public class Map extends Component implements MapListener,DataChangedListener {
 		return map;
 	}
 	
+	/**
+	 * Sets a MapModel for inserting MapObjects.
+	 * 
+	 * @param aModel
+	 */
 	public void setModel(MapModel aModel){
 		if( this.model == aModel ) return;
 		if (this.model != null ){

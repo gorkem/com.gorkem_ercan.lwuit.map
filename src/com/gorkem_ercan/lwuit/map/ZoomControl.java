@@ -32,7 +32,14 @@ import com.nokia.maps.map.MapDisplay;
 import com.nokia.mid.ui.gestures.GestureEvent;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 
-public class ZoomControl extends MapComponentBase implements EventListener {
+/**
+ * Internal control for zooming on the map. 
+ * Supports touch, pinch and keys.
+ * 
+ * @author Gorkem Ercan
+ *
+ */
+class ZoomControl extends MapComponentBase implements EventListener {
 
 	
 	private final class PinchZoomHandler extends GestureHandler{

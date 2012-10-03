@@ -24,10 +24,19 @@ import java.util.Vector;
 
 import com.nokia.maps.map.MapFactory;
 import com.nokia.maps.map.MapObject;
+import com.sun.lwuit.List;
 import com.sun.lwuit.events.DataChangedListener;
 import com.sun.lwuit.events.SelectionListener;
 import com.sun.lwuit.list.ListModel;
 
+/**
+ * An abstract Model for adding {@link MapObject} items to a {@link Map}.
+ * Since this class extends from {@link ListModel} it allows same model 
+ * class to be used both for {@link List}s and {@link Map}.
+ * 
+ * @author Gorkem Ercan
+ *
+ */
 public abstract class MapModel implements ListModel {
 	
 	private Vector selectionListeners;
