@@ -76,6 +76,7 @@ public abstract class MapModel implements ListModel {
 	public void setSelectedIndex(int index) {
 		int oldIndex = selectedIndex;
 		selectedIndex = index;
+		if(selectionListeners == null ) return;
 		for (int i = 0; i < selectionListeners.size(); i++) {
 			SelectionListener l = (SelectionListener)selectionListeners.elementAt(i);
 			l.selectionChanged(oldIndex, selectedIndex);
