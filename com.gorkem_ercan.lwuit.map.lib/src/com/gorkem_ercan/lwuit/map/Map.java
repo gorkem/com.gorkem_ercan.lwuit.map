@@ -66,12 +66,13 @@ public class Map extends Component implements MapListener,DataChangedListener {
 	 * 
 	 * @return factory
 	 */
-	public MapFactory getMapFactory(){
-		if(mapFactory == null ){
-			mapFactory = MapFactory.createMapFactory(
-					MapDisplay.MAP_RESOLUTION_AUTO,
-		            this.getPreferredW(), 
-		           this.getPreferredH());                
+	public MapFactory getMapFactory() {
+		synchronized (this) {
+			if (mapFactory == null) {
+				mapFactory = MapFactory.createMapFactory(
+						MapDisplay.MAP_RESOLUTION_AUTO, this.getPreferredW(),
+						this.getPreferredH());
+			}
 		}
 		return mapFactory;
 	}
@@ -81,11 +82,14 @@ public class Map extends Component implements MapListener,DataChangedListener {
 	 * 
 	 * @return MapDisplay
 	 */
-	public MapDisplay getMapDisplay(){
-		if(map==null){
-			map = getMapFactory().createMapDisplay();
-			map.addMapComponent(new InteractionControl());
-			map.addMapComponent(new ZoomControl());
+	public MapDisplay getMapDisplay() {
+		synchronized (this) {
+			if (map == null) {
+				MapFactory f = getMapFactory();
+				map = f.createMapDisplay();
+				map.addMapComponent(new InteractionControl());
+				map.addMapComponent(new ZoomControl());
+			}
 		}
 		return map;
 	}

@@ -44,8 +44,8 @@ public abstract class MapModel implements ListModel {
 	private Vector dataListeners;
 	private Map map;
 	private MapModelSelectionComponent selectionComponent;
-	protected Object[] objects;
-	private MapObject[] mapObjects;
+	protected volatile Object[] objects;
+	private volatile MapObject[] mapObjects;
 
 	protected abstract MapObject createMapObjectForItemAt(int index, MapFactory factory );
 	
@@ -118,24 +118,31 @@ public abstract class MapModel implements ListModel {
 			l.dataChanged(type, index);
 		}
 	}
+
 	public void addItem(Object obj) {
-		if(obj == null ) return;
-		if(objects == null){
-			mapObjects = new MapObject[1];
-			objects= new Object[1];
-			objects[0] = obj;
-			notifyDataChangedListeners(DataChangedListener.ADDED, 0);
+		if (obj == null)
 			return;
+		int idx = 0;
+
+		if (objects == null) {
+			mapObjects = new MapObject[1];
+			objects = new Object[1];
+			objects[0] = obj;
+		} else {
+			synchronized (mapObjects) {
+				int newSize = objects.length + 1;
+				Object[] newArray = new Object[newSize];
+				MapObject[] newMapObjects = new MapObject[newSize];
+				System.arraycopy(objects, 0, newArray, 0, objects.length);
+				System.arraycopy(mapObjects, 0, newMapObjects, 0,
+						mapObjects.length);
+				idx = newArray.length - 1;
+				newArray[idx] = obj;
+				objects = newArray;
+				mapObjects = newMapObjects;
+			}
 		}
-		int newSize = objects.length+1;
-		Object[] newArray = new Object[newSize];
-		MapObject[] newMapObjects = new MapObject[newSize];
-		System.arraycopy(objects, 0, newArray, 0, objects.length);
-		System.arraycopy(mapObjects, 0, newMapObjects, 0, mapObjects.length);
-		int idx = newArray.length-1;
-		newArray[idx] = obj;
-		objects = newArray;
-		mapObjects = newMapObjects;
+
 		notifyDataChangedListeners(DataChangedListener.ADDED, idx);
 	}
 	public Object getItemAt(int index) {
@@ -149,34 +156,43 @@ public abstract class MapModel implements ListModel {
 		if(objects==null )return 0;
 		return objects.length;
 	}
+
 	public void removeItem(int index) {
-		if (objects == null || 
-				index >= objects.length ||
-				objects.length < 0 
-				) return; 
-		Object[] newArray = new Object[objects.length-1];
-		System.arraycopy(objects, 0, newArray, 0, index);
-		System.arraycopy(objects, index+1, newArray, index, objects.length-index);
-		objects = newArray;
-		MapObject[] newMapObjects = new MapObject[objects.length-1];
-		System.arraycopy(mapObjects, 0, newMapObjects, 0, index);
-		System.arraycopy(mapObjects, index+1, newMapObjects, index, mapObjects.length-index);
-		objects = newArray;
+		if (objects == null || index >= objects.length || objects.length < 0)
+			return;
+		synchronized (mapObjects) {
+			Object[] newArray = new Object[objects.length - 1];
+			System.arraycopy(objects, 0, newArray, 0, index);
+			System.arraycopy(objects, index + 1, newArray, index,
+					objects.length - index);
+			objects = newArray;
+			MapObject[] newMapObjects = new MapObject[objects.length - 1];
+			System.arraycopy(mapObjects, 0, newMapObjects, 0, index);
+			System.arraycopy(mapObjects, index + 1, newMapObjects, index,
+					mapObjects.length - index);
+			objects = newArray;
+		}
 		notifyDataChangedListeners(DataChangedListener.REMOVED, index);
 	}
 	
-	public MapObject getMapObjectForItemAt( int index) {
+	public MapObject getMapObjectForItemAt( int index ) {
 		if(mapObjects!= null && mapObjects[index] == null ){
-			mapObjects[index] = createMapObjectForItemAt(index, map.getMapFactory() );
+			synchronized (mapObjects) {
+				mapObjects[index] = createMapObjectForItemAt(index,
+						map.getMapFactory());
+			}
 		}
 		return mapObjects[index];
 	}
+	
 	public int getIndexforMapObject(MapObject mapObject){
 		if(mapObjects == null || mapObject == null )
 			return -1;
-		for (int i = 0; i < mapObjects.length; i++) {
-			if(mapObjects[i] == mapObject )
-				return i;
+		synchronized (mapObjects) {
+			for (int i = 0; i < mapObjects.length; i++) {
+				if (mapObjects[i] == mapObject)
+					return i;
+			}
 		}
 		return -1;
 	}
