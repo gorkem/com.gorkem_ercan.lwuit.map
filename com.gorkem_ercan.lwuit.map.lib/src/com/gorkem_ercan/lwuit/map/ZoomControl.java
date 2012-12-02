@@ -47,7 +47,7 @@ class ZoomControl extends MapComponentBase implements EventListener {
 		public void gestureAction(GestureEvent e) {
 			if ( e.getType() == GestureInteractiveZone.GESTURE_PINCH ) {
 				
-				double zoom = map.getZoomLevel() + (e.getPinchDistanceChange()/10);
+				double zoom = map.getZoomLevel() + (e.getPinchDistanceChange()/100);
 				if (zoom < map.getMinZoomLevel()){
 					zoom = map.getMinZoomLevel();
 				}else 
